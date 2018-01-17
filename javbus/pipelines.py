@@ -84,7 +84,7 @@ class JavbusPipeline(object):
 
 
     def close_spider(self, spider):
-        self.dbConn.commit()
+        # self.dbConn.commit()
         self.cursor.close()
         self.dbConn.close()
         print("Spider Done!")
@@ -138,6 +138,8 @@ class JavbusPipeline(object):
             except Exception as e:
                 print(e)
                 self.dbConn.rollBack()
+
+        self.cursor.commit()
         self.downloadImagesWithItem(item = item)
 
 
