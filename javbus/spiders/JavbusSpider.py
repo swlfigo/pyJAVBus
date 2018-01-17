@@ -21,11 +21,11 @@ class JavbusspiderSpider(scrapy.Spider):
         javList = response.xpath('//a[@class = "movie-box"]/@href').extract()
         for javItem in javList:
             # request =  Request(javItem,callback=self.parse_inner)
-            request = SplashRequest(javItem, callback=self.parse_inner,args={'wait': 2})
+            request = SplashRequest(javItem, callback=self.parse_inner,args={'wait': 10})
             yield request
-        for i in range(120,1,-1):
+        for i in range(110,90,-1):
             page_url = 'https://www.javbus.cc/page/{}'.format(i)
-            yield Request(page_url,callback=self.parse,args={'wait': 2})
+            yield Request(page_url,callback=self.parse,meta={'download_timeout' : 10})
 
 
     def parse_inner(self,response):
