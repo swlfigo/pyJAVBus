@@ -1,0 +1,4 @@
+requests
+pymysql
+scrapy
+scrapy-splash
