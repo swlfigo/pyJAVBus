@@ -147,7 +147,7 @@ class JavbusPipeline(object):
 
     #下载图片
     def downloadImagesWithItem(self,item):
-        if len(item['samplePic']) == 0 or item['samplePic'] is None:
+        if len(item['samplePic']) == 0 or item['samplePic'] is None or len(item['cover']) == 0:
             return
         rootPath = item['code']
         rootPath = os.path.join(self.sourcePath,rootPath)
@@ -155,6 +155,7 @@ class JavbusPipeline(object):
             self.fileOperator.createDirPath(rootPath)
         samplePic = item['samplePic']
         samplePicArray = samplePic.split('||')
+        #样品图
         for picURLAddress in samplePicArray:
             list_name = picURLAddress.split('/')
             # 图片名称
@@ -172,5 +173,19 @@ class JavbusPipeline(object):
                     f.write(ir.content)
                     f.close()
 
-
-
+        #封面图
+        coverURL = item['cover']
+        coverSplit = coverURL.split('/')
+        cover_name = str(coverSplit[len(coverSplit) - 1])
+        coverPath = os.path.join(rootPath, cover_name)
+        try:
+            ir = requests.get(coverURL,timeout = 2)
+        except Exception as e:
+            print(e)
+            return
+        if ir.status_code == 200:
+            if self.fileOperator.isExistsFilePath(coverPath) == True:
+                return
+            with open(coverPath,'wb') as f:
+                f.write(ir.content)
+                f.close()
