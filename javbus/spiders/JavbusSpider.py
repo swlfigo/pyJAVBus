@@ -8,7 +8,7 @@ from scrapy_splash import SplashRequest
 class JavbusspiderSpider(scrapy.Spider):
     name = 'JavbusSpider'
     allowed_domains = ['www.javbus.cc']
-    start_urls = ['https://www.javbus.cc/page/1']
+    start_urls = ['https://www.javbus.cc/page/120']
 
     header = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
 
@@ -23,9 +23,9 @@ class JavbusspiderSpider(scrapy.Spider):
             # request =  Request(javItem,callback=self.parse_inner)
             request = SplashRequest(javItem, callback=self.parse_inner,args={'wait': 0.5})
             yield request
-        # for i in range(2,2):
-        #     page_url = 'https://www.javbus.cc/page/{}'.format(i)
-        #     yield Request(page_url,callback=self.parse)
+        for i in range(120,1,-1):
+            page_url = 'https://www.javbus.cc/page/{}'.format(i)
+            yield Request(page_url,callback=self.parse)
 
 
     def parse_inner(self,response):
