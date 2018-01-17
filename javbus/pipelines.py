@@ -28,10 +28,10 @@ class JavbusPipeline(object):
     def open_spider(self, spider):
         print('open pipelines')
         javDBName = 'JavBusPython'
-        DBHost = "127.0.0.1"
+        DBHost = "localhost"
         DBPort = 3306
         DBUser = 'root'
-        DBPassWord = 'ad953268'
+        DBPassWord = '22f25f9d81f4d21d'
         DBCharset = 'utf8'
         self.dbConn = pymysql.connect(DBHost, DBUser, DBPassWord, javDBName, charset=DBCharset)
         # conn = pymysql.connect(host = DBHost, user = DBUser, passwd = DBPassWord , port = DBPort ,charset=DBCharset)
