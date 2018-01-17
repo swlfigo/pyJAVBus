@@ -23,33 +23,6 @@ class JavbusPipeline(object):
     @classmethod
     def from_settings(cls, settings):
         print("Spider Singleton!")
-        # javDBName = 'JavBusPython'
-        # DBHost = "127.0.0.1"
-        # DBPort = 3306
-        # DBUser = 'root'
-        # DBPassWord = 'ad953268'
-        # DBCharset = 'utf8'
-        # conn = pymysql.connect(DBHost, DBUser, DBPassWord, javDBName, charset=DBCharset)
-        # # conn = pymysql.connect(host = DBHost, user = DBUser, passwd = DBPassWord , port = DBPort ,charset=DBCharset)
-        # cursor = conn.cursor()
-        # # cursor.execute('''CREATE DATABASE IF NOT EXISTS JavBusPython''')
-        # cursor.execute('''CREATE TABLE IF NOT EXISTS javBusTable(
-        #                     id          INTEGER           PRIMARY KEY     auto_increment,
-        #                     title        TEXT,
-        #                     cover      TEXT,
-        #                     code       TEXT,
-        #                     date   TEXT,
-        #                     duration  TEXT,
-        #                     series TEXT,
-        #                     type TEXT,
-        #                     actress TEXT,
-        #                     magnet TEXT,
-        #                     size TEXT,
-        #                     samplePic TEXT,
-        #                     link TEXT,
-        #                     LastIndexFlag TEXT
-        #                     )''')
-        # cursor.execute("set names 'utf8'")
         return cls()  # 相当于conn付给了这个类，self中可以得到
 
     def open_spider(self, spider):
@@ -99,7 +72,7 @@ class JavbusPipeline(object):
     def updateOrInsertItem(self,item,spider):
         if item['code'] is None or item['code'] =='' :
             raise DropItem("Missing Content ")
-            return
+
 
         sqlString = ''' SELECT * FROM javBusTable where code = '%s' ''' % item['code']
         self.cursor.execute(sqlString)
