@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 import requests
 import os
-import javbus
 from javbus.Utils import syFileOperator
 from javbus.Utils import syLogger
 from javbus.Utils import JAVBusMySQLDBManager
