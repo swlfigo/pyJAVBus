@@ -49,6 +49,8 @@ class javBusImageDownloadQueue(threading.Thread):
                         f.close()
                         self.logger.syLog('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
                         print('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
+                self.queue.task_done()
+
 
 
             #样例图片下载
@@ -74,3 +76,4 @@ class javBusImageDownloadQueue(threading.Thread):
                         f.close()
                         self.logger.syLog('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
                         print('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
+                self.queue.task_done()
