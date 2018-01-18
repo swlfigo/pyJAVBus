@@ -8,18 +8,12 @@ import os
 import pymysql
 import requests
 from scrapy.exceptions import DropItem
-from javbus.Utils import syFileOperator
+
 
 class JavbusPipeline(object):
 
     def __init__(self):
-
-        self.fileOperator = syFileOperator.syFileOperator()
-        #创建资源目录
-        self.sourcePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(self.fileOperator.currentPath))),'PYJAVBUS')
-        if self.fileOperator.isExistsFilePath(self.sourcePath) == False:
-            self.fileOperator.createDirPath(self.sourcePath)
-
+        pass
 
 
     @classmethod
@@ -122,47 +116,4 @@ class JavbusPipeline(object):
         print(failure)
 
 
-    #下载图片
-    def downloadImagesWithItem(self,item):
-        if len(item['samplePic']) == 0 or item['samplePic'] is None or len(item['cover']) == 0:
-            return
-        rootPath = item['code']
-        rootPath = os.path.join(self.sourcePath,rootPath)
-        if self.fileOperator.isExistsFilePath(rootPath) == False:
-            self.fileOperator.createDirPath(rootPath)
-        samplePic = item['samplePic']
-        samplePicArray = samplePic.split('||')
-        #样品图
-        for picURLAddress in samplePicArray:
-            list_name = picURLAddress.split('/')
-            # 图片名称
-            file_name = str(list_name[len(list_name) - 1])
-            filePath = os.path.join(rootPath,file_name)
-            try:
-                ir = requests.get(picURLAddress , timeout = 2)
-            except Exception as e:
-                print(e)
-                continue
-            if ir.status_code == 200:
-                if self.fileOperator.isExistsFilePath(filePath) == True:
-                    continue
-                with open(filePath,'wb') as f:
-                    f.write(ir.content)
-                    f.close()
 
-        #封面图
-        coverURL = item['cover']
-        coverSplit = coverURL.split('/')
-        cover_name = str(coverSplit[len(coverSplit) - 1])
-        coverPath = os.path.join(rootPath, cover_name)
-        try:
-            ir = requests.get(coverURL,timeout = 2)
-        except Exception as e:
-            print(e)
-            return
-        if ir.status_code == 200:
-            if self.fileOperator.isExistsFilePath(coverPath) == True:
-                return
-            with open(coverPath,'wb') as f:
-                f.write(ir.content)
-                f.close()
