@@ -1,13 +1,18 @@
 # -*- coding:utf-8 -*-
 import requests
 import os
+import javbus
 from javbus.Utils import syFileOperator
 from javbus.Utils import syLogger
 from javbus.Utils import JAVBusMySQLDBManager
 
 
+
 class JAVImageDownloader():
+
+
     def __init__(self):
+
         self.fileOperator = syFileOperator.syFileOperator()
         self.dbManager = JAVBusMySQLDBManager.dbManager()
         self.logger = syLogger.syLoggerManager()
