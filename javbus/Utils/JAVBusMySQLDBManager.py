@@ -20,6 +20,7 @@ def singleton(cls, *args, **kw):
 @singleton
 class dbManager():
     javDBName = 'JavBusPython'
+    javTableName = 'javBusTable'
     DBHost = "localhost"
     DBPort = 3306
     DBUser = 'root'

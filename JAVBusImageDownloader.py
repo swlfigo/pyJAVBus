@@ -26,7 +26,7 @@ class JAVImageDownloader():
 
     def startDownLoadImage(self):
         print('SourceDownloadPath:%s'%self.sourcePath)
-        sqlString = '''SELECT * FROM %s'''%self.dbManager.javDBName
+        sqlString = '''SELECT * FROM %s'''%self.dbManager.javTableName
         items = self.dbManager.executeWithDictReturn(sqlString)
         if len(sqlString) == 0 or sqlString is None:
             self.logger.syLog('无下载资源图片')
