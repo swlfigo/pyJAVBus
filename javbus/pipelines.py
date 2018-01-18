@@ -115,7 +115,7 @@ class JavbusPipeline(object):
                 self.dbConn.rollBack()
 
         self.dbConn.commit()
-        self.downloadImagesWithItem(item = item)
+        # self.downloadImagesWithItem(item = item)
 
 
     def _handle_error(self, failure, item, spider):
