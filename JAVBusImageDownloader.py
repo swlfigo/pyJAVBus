@@ -55,7 +55,7 @@ class JAVImageDownloader():
                     downInfoDict = {
 
                         "url":str(picURLAddress),
-                        "code":item['code'],
+                        "code":str(item['code']),
                         "type":"samplePic"
 
                     }
@@ -64,8 +64,8 @@ class JAVImageDownloader():
             if item['cover'] is not None :
                 downInfoDict = {
 
-                    "url":item['cover'],
-                    "code":item['code'],
+                    "url":str(item['cover']),
+                    "code":str(item['code']),
                     "type":"cover"
 
                 }
@@ -76,7 +76,7 @@ class JAVImageDownloader():
             queue = JAVBusImageDownloadQueue.javBusImageDownloadQueue(self.downloadImageQueue)
             queue.setDaemon(True)
             queue.start()
-        for item in downInfoDict:
+        for item in self.downloadSource:
             self.downloadImageQueue.put(item)
         self.downloadImageQueue.join()
 
