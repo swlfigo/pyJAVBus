@@ -34,18 +34,21 @@ class javBusImageDownloadQueue(threading.Thread):
                 cover_name = str(coverSplit[len(coverSplit) - 1])
                 coverPath = os.path.join(rootPath, cover_name)
                 if self.fileOperator.isExistsFilePath(coverPath) == True:
+                    print('存在 %s 封面 %s' % (str(item['code']), cover_name))
                     self.logger.syLog('存在 %s 封面 %s' % (str(item['code']), cover_name))
                     break
                 try:
                     ir = requests.get(coverURL, timeout=2)
                 except Exception as e:
                     self.logger.syLog('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
+                    print('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
                     break
                 if ir.status_code == 200:
                     with open(coverPath, 'wb') as f:
                         f.write(ir.content)
                         f.close()
-                        self.logger.syLog('下载 %s 封面 %s' % (str(item['code']), cover_name))
+                        self.logger.syLog('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
+                        print('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
 
 
             #样例图片下载
@@ -57,14 +60,17 @@ class javBusImageDownloadQueue(threading.Thread):
                 # 存在图片则不用下载
                 if self.fileOperator.isExistsFilePath(filePath) == True:
                     self.logger.syLog('存在 %s 样品图 %s' % (str(item['code']), file_name))
+                    print('存在 %s 样品图 %s' % (str(item['code']), file_name))
                     break
                 try:
                     ir = requests.get(url, timeout=2)
                 except Exception as e:
                     self.logger.syLog('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
+                    print('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
                     break
                 if ir.status_code == 200:
                     with open(filePath, 'wb') as f:
                         f.write(ir.content)
                         f.close()
                         self.logger.syLog('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
+                        print('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
