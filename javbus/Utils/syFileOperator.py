@@ -10,7 +10,7 @@ fileTypeBlackList = ['.git' , '.idea' , '.DS_Store' ]
 class syFileOperator():
     def __init__(self):
         #获取当前文件所在的文件夹
-        self.currentPath = os.getcwd()
+        self.currentPath = os.path.dirname(os.path.realpath(__file__))
 
 
     #判断文件路径是否存在文件
