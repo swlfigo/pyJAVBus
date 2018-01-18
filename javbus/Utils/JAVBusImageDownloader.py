@@ -19,7 +19,7 @@ class JAVImageDownloader():
             self.fileOperator.createDirPath(self.sourcePath)
 
     def startDownLoadImage(self):
-
+        print('SourceDownloadPath:%s'%self.sourcePath)
         sqlString = '''SELECT * FROM %s'''%self.dbManager.javDBName
         items = self.dbManager.executeWithDictReturn(sqlString)
         if len(sqlString) == 0 or sqlString is None:
