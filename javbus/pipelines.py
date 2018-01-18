@@ -16,13 +16,10 @@ class JavbusPipeline(object):
 
         self.fileOperator = syFileOperator.syFileOperator()
         #创建资源目录
-        print('----------------------')
-        print(self.fileOperator.currentPath)
-        self.sourcePath = os.path.join(os.path.dirname(os.path.dirname(self.fileOperator.currentPath)),'PYJAVBUS')
+        self.sourcePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(self.fileOperator.currentPath))),'PYJAVBUS')
         if self.fileOperator.isExistsFilePath(self.sourcePath) == False:
             self.fileOperator.createDirPath(self.sourcePath)
-        print(self.sourcePath)
-        print('======================')
+
 
 
     @classmethod
