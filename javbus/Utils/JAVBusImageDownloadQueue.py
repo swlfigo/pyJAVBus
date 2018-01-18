@@ -20,9 +20,7 @@ class javBusImageDownloadQueue(threading.Thread):
 
     def run(self):
         while True:
-            item = self.queue.get(block = False)
-            if item is None:
-                break
+            item = self.queue.get()
             rootPath = item['code']
             rootPath = os.path.join(self.sourcePath, rootPath)
             if self.fileOperator.isExistsFilePath(rootPath) == False:
@@ -38,13 +36,13 @@ class javBusImageDownloadQueue(threading.Thread):
                 if self.fileOperator.isExistsFilePath(coverPath) == True:
                     print('存在 %s 封面 %s' % (str(item['code']), cover_name))
                     self.logger.syLog('存在 %s 封面 %s' % (str(item['code']), cover_name))
-                    return
+                    return False
                 try:
                     ir = requests.get(coverURL, timeout=2)
                 except Exception as e:
                     self.logger.syLog('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
                     print('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
-                    return
+                    return False
                 if ir.status_code == 200:
                     with open(coverPath, 'wb') as f:
                         f.write(ir.content)
@@ -65,13 +63,13 @@ class javBusImageDownloadQueue(threading.Thread):
                 if self.fileOperator.isExistsFilePath(filePath) == True:
                     self.logger.syLog('存在 %s 样品图 %s' % (str(item['code']), file_name))
                     print('存在 %s 样品图 %s' % (str(item['code']), file_name))
-                    return
+                    return False
                 try:
                     ir = requests.get(url, timeout=2)
                 except Exception as e:
                     self.logger.syLog('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
                     print('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
-                    return
+                    return False
                 if ir.status_code == 200:
                     with open(filePath, 'wb') as f:
                         f.write(ir.content)
