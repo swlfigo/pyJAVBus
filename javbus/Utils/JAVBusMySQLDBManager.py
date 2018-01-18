@@ -45,7 +45,7 @@ class dbManager():
         if len(sqlStringArray) == 0:
             print ('SQLString数据为空')
             return
-        conn = pymysql.connect(self.DBHost, self.DBUser, self.DBPassWord, self.tumblrDBName,
+        conn = pymysql.connect(self.DBHost, self.DBUser, self.DBPassWord, self.javDBName,
                                charset=self.DBCharset)
         cursor = conn.cursor()
         try:
@@ -63,7 +63,7 @@ class dbManager():
     # 执行命令
     def execute(self, executeString):
         fetchResult = []
-        conn = pymysql.connect(self.DBHost,self.DBUser,self.DBPassWord,self.tumblrDBName,charset=self.DBCharset)
+        conn = pymysql.connect(self.DBHost,self.DBUser,self.DBPassWord,self.javDBName,charset=self.DBCharset)
         cursor = conn.cursor()
         try:
             results = cursor.execute(executeString)
@@ -84,7 +84,7 @@ class dbManager():
     # 执行命令(字典返回)
     def executeWithDictReturn(self, executeString):
         fetchResult = []
-        conn = pymysql.connect(self.DBHost,self.DBUser,self.DBPassWord,self.tumblrDBName,charset=self.DBCharset)
+        conn = pymysql.connect(self.DBHost,self.DBUser,self.DBPassWord,self.javDBName,charset=self.DBCharset)
         cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
         try:
             results = cursor.execute(executeString)
