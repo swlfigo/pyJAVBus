@@ -48,7 +48,9 @@ class javBusImageDownloadQueue(threading.Thread):
                         f.write(ir.content)
                         f.close()
                         self.logger.syLog('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
-                        print('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
+                        self.logger.syLog('CoverPath:%s'%str(coverPath))
+                        print('===>写入 %s 封面 %s 成功' % (str(item['code']), cover_name))
+                        print('CoverPath:%s'%str(coverPath))
                 self.queue.task_done()
 
 
@@ -76,4 +78,6 @@ class javBusImageDownloadQueue(threading.Thread):
                         f.close()
                         self.logger.syLog('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
                         print('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
+                        print('===>写入 %s 样品图 %s 成功' % (str(item['code']), file_name))
+                        print('CoverPath:%s' % str(filePath))
                 self.queue.task_done()
