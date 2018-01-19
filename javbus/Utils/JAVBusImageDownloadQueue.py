@@ -20,7 +20,7 @@ class javBusImageDownloadQueue(threading.Thread):
 
     def run(self):
         while True:
-            #
+            
             item = self.queue.get()
             rootPath = item['code']
             rootPath = os.path.join(self.sourcePath, rootPath)
