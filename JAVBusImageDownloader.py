@@ -78,8 +78,7 @@ class JAVImageDownloader():
             queue.start()
         for i in range(len(self.downloadSource)):
             self.downloadImageQueue.put(self.downloadSource[i])
-            if i == len(self.downloadSource) - 1 :
-                self.downloadImageQueue.put(None)
+
 
         self.downloadImageQueue.join()
 
