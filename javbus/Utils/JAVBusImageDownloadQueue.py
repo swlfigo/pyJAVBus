@@ -20,7 +20,6 @@ class javBusImageDownloadQueue(threading.Thread):
 
     def run(self):
         while True:
-            
             item = self.queue.get()
             rootPath = item['code']
             rootPath = os.path.join(self.sourcePath, rootPath)
@@ -36,7 +35,7 @@ class javBusImageDownloadQueue(threading.Thread):
                 coverPath = os.path.join(rootPath, cover_name)
                 if self.fileOperator.isExistsFilePath(coverPath) == True:
                     print('存在 %s 封面 %s' % (str(item['code']), cover_name))
-                    self.logger.syLog('存在 %s 封面 %s' % (str(item['code']), cover_name))
+                    # self.logger.syLog('存在 %s 封面 %s' % (str(item['code']), cover_name))
                 else:
                     try:
                         ir = requests.get(coverURL, timeout=2)
@@ -64,7 +63,7 @@ class javBusImageDownloadQueue(threading.Thread):
                 filePath = os.path.join(rootPath, file_name)
                 # 存在图片则不用下载
                 if self.fileOperator.isExistsFilePath(filePath) == True:
-                    self.logger.syLog('存在 %s 样品图 %s' % (str(item['code']), file_name))
+                    # self.logger.syLog('存在 %s 样品图 %s' % (str(item['code']), file_name))
                     print('存在 %s 样品图 %s' % (str(item['code']), file_name))
                 else:
                     try:
