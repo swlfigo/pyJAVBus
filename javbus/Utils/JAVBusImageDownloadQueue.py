@@ -93,5 +93,5 @@ class javBusImageDownloadQueue(threading.Thread):
 
 
     def _stop(self):
-        self.logger.syLogManyLines(self.logInfo)
+        # self.logger.syLogManyLines(self.logInfo)
         print('End Queue')

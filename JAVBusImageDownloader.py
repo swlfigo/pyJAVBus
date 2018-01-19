@@ -90,3 +90,6 @@ if __name__ == '__main__':
     sys.path.append(os.path.dirname(os.path.realpath(__file__)))
     imageDownloader = JAVImageDownloader()
     imageDownloader.startDownLoadImage()
+    print('结束清除SWAP')
+    os.system('date ; sleep 10 ; swapoff -a && swapon -a ; date')
+    print('清除SWAP成功')
