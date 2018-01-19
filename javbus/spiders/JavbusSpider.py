@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import scrapy
 import os
+import time
 from scrapy.http import Request
 from javbus.items import JavbusItem
 from scrapy_splash import SplashRequest
@@ -12,10 +13,16 @@ class JavbusspiderSpider(scrapy.Spider):
     os.system('docker kill splash')
     print('关闭DOCKER命令完!')
 
+    time.sleep(1)
+
     #启动Docker
     print('启动DOCKER!')
-    os.system('nohup docker run --name=splash -p 8050:8050 scrapinghub/splash > /dev/null 2>&1 & ')
+    os.system('nohup docker run --name splash -p 8050:8050 scrapinghub/splash > /dev/null 2>&1 &')
     print('启动DOCKER命令完!')
+
+    time.sleep(3)
+
+    print('启动爬虫')
 
     name = 'JavbusSpider'
     allowed_domains = ['www.javbus.cc']
