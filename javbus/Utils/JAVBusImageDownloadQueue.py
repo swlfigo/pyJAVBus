@@ -34,7 +34,6 @@ class javBusImageDownloadQueue(threading.Thread):
                 cover_name = str(coverSplit[len(coverSplit) - 1])
                 coverPath = os.path.join(rootPath, cover_name)
                 if self.fileOperator.isExistsFilePath(coverPath) == True:
-                    # self.logger.syLog('存在 %s 封面 %s' % (str(item['code']), cover_name))
                     info = '存在 %s 封面 %s ' % (str(item['code']), cover_name)
                     print(info)
                     self.logInfo.append(info)
@@ -42,7 +41,6 @@ class javBusImageDownloadQueue(threading.Thread):
                     try:
                         ir = requests.get(coverURL, timeout=2)
                     except Exception as e:
-                        # self.logger.syLog('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
                         info = '下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e))
                         print(info)
                         self.logInfo.append(info)
@@ -51,8 +49,6 @@ class javBusImageDownloadQueue(threading.Thread):
                         with open(coverPath, 'wb') as f:
                             f.write(ir.content)
                             f.close()
-                            # self.logger.syLog('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
-                            # self.logger.syLog('CoverPath:%s'%str(coverPath))
                             info = '下载 %s 封面 %s 成功' % (str(item['code']), cover_name)
                             self.logInfo.append(info)
                             print('===>写入 %s 封面 %s 成功' % (str(item['code']), cover_name))
@@ -69,7 +65,6 @@ class javBusImageDownloadQueue(threading.Thread):
                 filePath = os.path.join(rootPath, file_name)
                 # 存在图片则不用下载
                 if self.fileOperator.isExistsFilePath(filePath) == True:
-                    # self.logger.syLog('存在 %s 样品图 %s' % (str(item['code']), file_name))
                     info = '存在 %s 样品图 %s' % (str(item['code']), file_name)
                     self.logInfo.append(info)
                     print(info)
@@ -77,7 +72,6 @@ class javBusImageDownloadQueue(threading.Thread):
                     try:
                         ir = requests.get(url, timeout=2)
                     except Exception as e:
-                        # self.logger.syLog('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
                         info = '下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e))
                         print(info)
                         self.logInfo.append(info)
@@ -86,7 +80,6 @@ class javBusImageDownloadQueue(threading.Thread):
                         with open(filePath, 'wb') as f:
                             f.write(ir.content)
                             f.close()
-                            # self.logger.syLog('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
                             info = '下载 %s 样品图 %s 成功' % (str(item['code']), file_name)
                             self.logInfo.append(info)
                             print('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
@@ -96,6 +89,5 @@ class javBusImageDownloadQueue(threading.Thread):
 
 
     def _stop(self):
-
         self.logger.syLogManyLines(self.logInfo)
         print('End Queue')

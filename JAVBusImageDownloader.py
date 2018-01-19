@@ -25,7 +25,7 @@ class JAVImageDownloader():
         if self.fileOperator.isExistsFilePath(self.sourcePath) == False:
             self.fileOperator.createDirPath(self.sourcePath)
         #Queue
-        self.downloadImageQueue = queue.Queue()
+        self.downloadImageQueue = queue.Queue(maxsize = 5)
         #Resource
         self.downloadSource = []
 
