@@ -37,6 +37,7 @@ class javBusImageDownloadQueue(threading.Thread):
                     info = '存在 %s 封面 %s ' % (str(item['code']), cover_name)
                     print(info)
                     self.logInfo.append(info)
+                    self.queue.empty()
                     self.queue.task_done()
                 else:
                     try:
@@ -69,6 +70,7 @@ class javBusImageDownloadQueue(threading.Thread):
                     info = '存在 %s 样品图 %s' % (str(item['code']), file_name)
                     self.logInfo.append(info)
                     print(info)
+                    self.queue.empty()
                     self.queue.task_done()
                 else:
                     try:
