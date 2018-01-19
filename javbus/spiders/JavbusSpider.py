@@ -1,14 +1,21 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import os
 from scrapy.http import Request
 from javbus.items import JavbusItem
 from scrapy_splash import SplashRequest
 
 
 class JavbusspiderSpider(scrapy.Spider):
+
+    #启动Docker
+    print('启动DOCKER!')
+    os.system('docker run -p 8050:8050 scrapinghub/splash')
+
+
     name = 'JavbusSpider'
     allowed_domains = ['www.javbus.cc']
-    start_urls = ['https://www.javbus.cc/page/120']
+    start_urls = ['https://www.javbus.cc/page/1']
 
     header = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36'}
 
@@ -23,7 +30,7 @@ class JavbusspiderSpider(scrapy.Spider):
             # request =  Request(javItem,callback=self.parse_inner)
             request = SplashRequest(javItem, callback=self.parse_inner,args={'wait': 10})
             yield request
-        for i in range(110,90,-1):
+        for i in range(1,2,1):
             page_url = 'https://www.javbus.cc/page/{}'.format(i)
             yield Request(page_url,callback=self.parse,meta={'download_timeout' : 10})
 
