@@ -11,6 +11,7 @@ class JavbusspiderSpider(scrapy.Spider):
     #关闭Docker
     print('关闭DOCKER!')
     os.system('docker kill splash')
+    os.system('docker rm splash')
     print('关闭DOCKER命令完!')
 
     time.sleep(1)
