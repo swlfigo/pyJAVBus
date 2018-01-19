@@ -46,3 +46,13 @@ class syLoggerManager():
             f = open(self.logFilePath,'a')
             f.write('\n %s =====>  %s'%(str(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')) , info))
             f.close()
+
+    def syLogManyLines(self,infoArray):
+        if infoArray is None:
+            return
+        if self.isDebugMode == True:
+            f = open(self.logFilePath, 'a')
+            for info in infoArray:
+
+                f.write('\n %s' % (info))
+            f.close()

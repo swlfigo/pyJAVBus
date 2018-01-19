@@ -15,7 +15,7 @@ class javBusImageDownloadQueue(threading.Thread):
         self.logger = syLogger.syLoggerManager()
         # 资源目录
         self.sourcePath = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(self.fileOperator.currentPath))),'PYJAVBUS')
-
+        self.logInfo = []
 
 
     def run(self):
@@ -34,21 +34,27 @@ class javBusImageDownloadQueue(threading.Thread):
                 cover_name = str(coverSplit[len(coverSplit) - 1])
                 coverPath = os.path.join(rootPath, cover_name)
                 if self.fileOperator.isExistsFilePath(coverPath) == True:
-                    print('存在 %s 封面 %s' % (str(item['code']), cover_name))
                     # self.logger.syLog('存在 %s 封面 %s' % (str(item['code']), cover_name))
+                    info = '存在 %s 封面 %s ' % (str(item['code']), cover_name)
+                    print(info)
+                    self.logInfo.append(info)
                 else:
                     try:
                         ir = requests.get(coverURL, timeout=2)
                     except Exception as e:
-                        self.logger.syLog('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
-                        print('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
+                        # self.logger.syLog('下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e)))
+                        info = '下载 %s 封面 %s 错误 Error : %s ' % (str(item['code']), cover_name, str(e))
+                        print(info)
+                        self.logInfo.append(info)
                         self.queue.task_done()
                     if ir.status_code == 200:
                         with open(coverPath, 'wb') as f:
                             f.write(ir.content)
                             f.close()
-                            self.logger.syLog('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
-                            self.logger.syLog('CoverPath:%s'%str(coverPath))
+                            # self.logger.syLog('下载 %s 封面 %s 成功' % (str(item['code']), cover_name))
+                            # self.logger.syLog('CoverPath:%s'%str(coverPath))
+                            info = '下载 %s 封面 %s 成功' % (str(item['code']), cover_name)
+                            self.logInfo.append(info)
                             print('===>写入 %s 封面 %s 成功' % (str(item['code']), cover_name))
                             print('CoverPath:%s'%str(coverPath))
                     self.queue.task_done()
@@ -64,20 +70,32 @@ class javBusImageDownloadQueue(threading.Thread):
                 # 存在图片则不用下载
                 if self.fileOperator.isExistsFilePath(filePath) == True:
                     # self.logger.syLog('存在 %s 样品图 %s' % (str(item['code']), file_name))
-                    print('存在 %s 样品图 %s' % (str(item['code']), file_name))
+                    info = '存在 %s 样品图 %s' % (str(item['code']), file_name)
+                    self.logInfo.append(info)
+                    print(info)
                 else:
                     try:
                         ir = requests.get(url, timeout=2)
                     except Exception as e:
-                        self.logger.syLog('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
-                        print('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
+                        # self.logger.syLog('下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e)))
+                        info = '下载 %s 样品图 %s 错误 Error : %s ' % (str(item['code']), file_name, str(e))
+                        print(info)
+                        self.logInfo.append(info)
                         self.queue.task_done()
                     if ir.status_code == 200:
                         with open(filePath, 'wb') as f:
                             f.write(ir.content)
                             f.close()
-                            self.logger.syLog('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
+                            # self.logger.syLog('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
+                            info = '下载 %s 样品图 %s 成功' % (str(item['code']), file_name)
+                            self.logInfo.append(info)
                             print('下载 %s 样品图 %s 成功' % (str(item['code']), file_name))
                             print('===>写入 %s 样品图 %s 成功' % (str(item['code']), file_name))
                             print('CoverPath:%s' % str(filePath))
                     self.queue.task_done()
+
+
+    def _stop(self):
+
+        self.logger.syLogManyLines(self.logInfo)
+        print('End Queue')
