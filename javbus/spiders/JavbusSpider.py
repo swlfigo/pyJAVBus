@@ -103,6 +103,8 @@ class JavbusspiderSpider(scrapy.Spider):
         print('关闭DOCKER!')
         os.system('docker stop --time=20 splash')
         print('关闭DOCKER命令完!')
+        time.sleep(5)
+        os.system('swapoff - a & & swapon - a')
         closed = getattr(spider, 'closed', None)
         if callable(closed):
             return closed(reason)
