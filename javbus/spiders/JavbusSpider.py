@@ -10,8 +10,8 @@ class JavbusspiderSpider(scrapy.Spider):
 
     #启动Docker
     print('启动DOCKER!')
-    os.system('docker run -p 8050:8050 scrapinghub/splash')
-
+    os.system('nohup docker run -p 8050:8050 scrapinghub/splash > /dev/null 2>&1 & ')
+    print('启动DOCKER命令完!')
 
     name = 'JavbusSpider'
     allowed_domains = ['www.javbus.cc']
