@@ -7,10 +7,14 @@ from scrapy_splash import SplashRequest
 
 
 class JavbusspiderSpider(scrapy.Spider):
+    #关闭Docker
+    print('关闭DOCKER!')
+    os.system('docker kill splash')
+    print('关闭DOCKER命令完!')
 
     #启动Docker
     print('启动DOCKER!')
-    os.system('nohup docker run -p 8050:8050 scrapinghub/splash > /dev/null 2>&1 & ')
+    os.system('nohup docker run --name=splash -p 8050:8050 scrapinghub/splash > /dev/null 2>&1 & ')
     print('启动DOCKER命令完!')
 
     name = 'JavbusSpider'
@@ -83,3 +87,15 @@ class JavbusspiderSpider(scrapy.Spider):
         item['size'] = ("||".join(item['size'])).strip()
         item['size'] = item['size'].replace('\t',"").replace('\n',"").replace(' ',"")
         yield item
+
+    @staticmethod
+    def close(spider, reason):
+        #关闭Spider
+        print('关闭Spider')
+        print('关闭DOCKER!')
+        os.system('docker stop --time=20 splash')
+        print('关闭DOCKER命令完!')
+        closed = getattr(spider, 'closed', None)
+        if callable(closed):
+            return closed(reason)
+
