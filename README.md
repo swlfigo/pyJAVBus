@@ -1,8 +1,19 @@
 # pyJAVBus
 
+### Description:
+`JAVBus` 爬虫项目练手项目,老司机专属
+
+
 ### Ajax抓取使用注意事项:
 Python 使用 'scrapy-splash' 库
 Docker 使用 `scrapinghub/splash`
+
+### Warning:
+**CentOS Only**
+**Python3 Only**
+1. 脚本中运行Docker与清除Swap功能仅在 `Centos` 系统下运用
+2. 请在本地数据添加 `JavBusPython` 数据库
+3. 数据库要求'UTF8'格式,可通过 `phpAdmin`添加,如果格式不对，日文无法插入
 
 ### USAGE:
 1. 先安装Python依赖库 
@@ -16,7 +27,8 @@ pip install -r require.txt
 docker pull scrapinghub/splash
 ```
 
-3. 运行 Docker
+~~3. 运行 Docker~~
+(脚本集成了开启Docker功能 与 清除SwapMemory)功能
 
 ```c
 docker run -p 8050:8050 scrapinghub/splash
@@ -30,9 +42,9 @@ python -m scrapy crawl JavbusSpider
 
 ### PS: 需要修改地方:
 `pipelines.py` 中数据库信息
+`JavbusSpider.py` 中爬取页面深度,默认第一第二页
 
-
-### 关于部署:
+### 关于部署(非必须,可手动开启脚本):
 
 1. 使用 `scrapyd` 与 `scrapyd-client` , 已经包含在 `require.txt` 中
 
@@ -98,5 +110,13 @@ curl http://localhost:6800/cancel.json -d project=PROJECT_NAME -d job=JOB_ID
 
 
 
+
+#### Last But Not Least
+
+脚本只是提供提供爬取信息插入数据库收藏，此脚本不包括下载图片功能,如果需要下载图片数据,可运行
+
+`python JAVBusImageDownloader.py`
+
+下载数据库中所有信息中的图片,保存地址为文件夹根目录上一级目录，新建 `PYJavBus` 文件夹中
 
 
